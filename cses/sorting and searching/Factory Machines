@@ -1,0 +1,47 @@
+A factory has n
+ machines which can be used to make products. Your goal is to make a total of t
+ products.
+
+For each machine, you know the number of seconds it needs to make a single product. 
+The machines can work simultaneously, and you can freely decide their schedule.
+
+What is the shortest time needed to make t
+ products?
+
+Solution:Here we use binary search to find the minimum time.We search in the range of start to end find mid
+and check if this mid can be a possible answer.
+If yes we check for a smaller answer that can be our minimum else
+increase our low pointer.
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+ll n,t;
+ll mx=2*(1e5);
+ vector<ll>a(mx);
+ 
+bool check(ll c){
+  ll sum=0;
+  for(int i=0;i<n;i++){
+    sum+=min(c/a[i],(ll)(1e9));
+  }
+  return sum>=t;
+}
+ 
+int main(){
+  cin>>n>>t;
+  for(ll i=0;i<n;i++){
+    cin>>a[i];
+  }
+  ll start=0,end=1e18;
+  while(start<end){
+    ll mid=start/2+end/2;
+    if(check(mid)){
+      end=mid;
+    }
+    else
+    start=mid+1;
+  }
+  cout<<end;
+  return 0;
+}
